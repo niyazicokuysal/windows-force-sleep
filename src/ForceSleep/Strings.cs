@@ -1,0 +1,219 @@
+using System.Globalization;
+
+namespace ForceSleep;
+
+internal enum DeviceKind { Keyboard, Mouse, Network, PowerButton, Lid, Usb, Other }
+
+/// <summary>
+/// Every user-visible text, Turkish and English side by side. Turkish is used when Windows'
+/// display language is Turkish, English otherwise. Log messages stay English and live in code.
+/// </summary>
+internal static class L
+{
+    private static readonly CultureInfo TurkishCulture = CultureInfo.GetCultureInfo("tr-TR");
+    private static readonly CultureInfo EnglishCulture = CultureInfo.GetCultureInfo("en-US");
+
+    public static bool Turkish { get; set; } = WindowsIsTurkish;
+
+    private static bool WindowsIsTurkish => CultureInfo.InstalledUICulture.TwoLetterISOLanguageName == "tr"
+                                            || CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "tr";
+
+    /// <summary>Applies the user's choice: "tr", "en", or null to follow Windows.</summary>
+    public static void Use(string? language) => Turkish = language switch
+    {
+        "tr" => true,
+        "en" => false,
+        _ => WindowsIsTurkish,
+    };
+
+    /// <summary>For dates and lower-casing in the UI language.</summary>
+    public static CultureInfo Culture => Turkish ? TurkishCulture : EnglishCulture;
+
+    private static string T(string tr, string en) => Turkish ? tr : en;
+
+    // ── Tray ──────────────────────────────────────────────────────────────
+
+    public static string SleepNow => T("Şimdi uyut", "Sleep now");
+    public static string Hibernate => T("Hazırda beklet", "Hibernate");
+    public static string HibernateUnavailable => T("Bu bilgisayarda hazırda bekletme kapalı.", "Hibernate is turned off on this PC.");
+    public static string WhyDidntItSleep => T("Neden uyumadı?", "Why didn't it sleep?");
+    public static string HibernateFallback => T("Uyumazsa hazırda beklet", "Hibernate if sleep fails");
+    public static string StartWithWindows => T("Windows açılınca başlat", "Start with Windows");
+    public static string Exit => T("Çıkış", "Exit");
+    // Shown in both languages so someone who can't read the current one can still find it.
+    public static string LanguageMenu => T("Dil / Language", "Language / Dil");
+    public static string LanguageAuto => T("Otomatik (Windows dili)", "Automatic (Windows language)");
+    public static string TooltipIdle => T("uyutmak için tıkla", "click to sleep");
+    public static string TooltipBusy => T("uyutuluyor…", "going to sleep…");
+
+    private static string WhereIsIcon => T(
+        "Ay simgesi saatin yanında; görmüyorsan ^ okuna tıkla.",
+        "The moon icon is next to the clock; if you don't see it, click the ^ arrow.");
+    public static string Running => T("Çalışıyor. ", "Running. ") + WhereIsIcon;
+    public static string AlreadyRunning => T("Zaten çalışıyor. ", "Already running. ") + WhereIsIcon;
+    public static string NoSleepSupport => T(
+        "Bu bilgisayarda uyku ve hazırda bekletme kapalı görünüyor.",
+        "Sleep and hibernate appear to be turned off on this PC.");
+    public static string UnexpectedError => T("Beklenmeyen bir hata oluştu.", "Something unexpected went wrong.");
+    public static string AutoStartFailed => T("Otomatik başlatma ayarı değiştirilemedi.", "Couldn't change the start-with-Windows setting.");
+
+    private static string ClickForDetails => T(" Ayrıntılar için tıkla.", " Click for details.");
+    public static string ForcedSleep => T("Normal uyku engellendi, bilgisayar zorla uyutuldu.", "Normal sleep was blocked, so the PC was forced to sleep.") + ClickForDetails;
+    public static string HibernatedInstead => T("Uyku engellendi, bilgisayar bunun yerine hazırda bekletildi.", "Sleep was blocked, so the PC hibernated instead.") + ClickForDetails;
+    public static string WokeAfter(TimeSpan asleep) => T($"Bilgisayar {asleep.TotalSeconds:0} saniye sonra uyandı.", $"The PC woke up after {asleep.TotalSeconds:0} seconds.") + ClickForDetails;
+    public static string Cancelled => T("Fare veya klavye hareketi algılandı, uyutma iptal edildi.", "Mouse or keyboard activity detected, so sleep was cancelled.");
+    public static string SleepFailed(bool suggestHibernate) => (suggestHibernate
+        ? T("Bilgisayar uyutulamadı. Menüden \"Hazırda beklet\"i deneyebilirsin.", "Couldn't put the PC to sleep. You can try \"Hibernate\" from the menu.")
+        : T("Bilgisayar uyutulamadı.", "Couldn't put the PC to sleep.")) + ClickForDetails;
+
+    // ── Diagnostics window ────────────────────────────────────────────────
+
+    public static string WindowTitle => T("Neden uyumadı? – Force Sleep", "Why didn't it sleep? – Force Sleep");
+    public static string Gathering => T("Bilgiler toplanıyor…", "Gathering information…");
+    public static string GatherFailed => T("Bilgiler toplanırken bir hata oluştu.", "Something went wrong while gathering information.");
+    public static string DetailedScan => T("Ayrıntılı tara (yönetici izni ister)", "Detailed scan (needs admin)");
+    public static string Refresh => T("Yenile", "Refresh");
+    public static string LogFile => T("Kayıt dosyası", "Log file");
+    public static string Close => T("Kapat", "Close");
+    public static string ScanDeclined => T("Yönetici izni verilmediği için ayrıntılı tarama yapılamadı.", "The detailed scan didn't run because admin permission wasn't given.");
+    public static string ScanHint => T(
+        "Uykuyu engelleyen programları ve uyandırma zamanlayıcılarını görmek için \"Ayrıntılı tara\"ya tıkla.",
+        "Click \"Detailed scan\" to see programs blocking sleep and wake timers.");
+    public static string Applying => T("Uygulanıyor…", "Applying…");
+    public static string ConfirmDisableInputWake => T(
+        "Bundan sonra bu aygıtlar bilgisayarı uykudan uyandıramaz. Bilgisayarı uyandırmak için başka bir aygıt veya güç düğmesi gerekir.\n\nDevam edilsin mi?",
+        "These devices will no longer wake the PC from sleep. You'll need another device or the power button to wake it.\n\nContinue?");
+
+    // ── Report: summary ───────────────────────────────────────────────────
+
+    public static string SummaryAwayModeRequest(string callers) => T(
+        $"\"Uzakta modu\" isteği bulundu: {callers}. Bu, ekranın kapanıp bilgisayarın çalışmaya devam etmesinin tipik sebeplerinden biridir.",
+        $"\"Away mode\" request found: {callers}. This is a typical reason for the screen turning off while the PC keeps running.");
+    public static string SummaryForced => T("Son denemede normal uyku engellendi; zorla uyku işe yaradı.", "Last time, normal sleep was blocked; forced sleep worked.");
+    public static string SummaryHibernated => T("Son denemede uyku tamamen engellendi; bilgisayar hazırda bekletildi.", "Last time, sleep was blocked entirely; the PC hibernated.");
+    public static string SummaryFailed => T("Son denemede bilgisayar uyumadı. Aşağıdaki bilgiler sebebi bulmana yardımcı olabilir.", "Last time, the PC didn't sleep. The information below can help find out why.");
+    public static string SummaryAwayModeOn => T(
+        "\"Uzakta modu\" açık. Bazı programlar bu sayede uykuyu, ekranın kapanıp bilgisayarın çalışmaya devam ettiği bir moda çevirebilir. Aşağıdan kapatabilirsin.",
+        "\"Away mode\" is on. It lets some programs turn sleep into a mode where the screen goes off but the PC keeps running. You can turn it off below.");
+    public static string SummaryNoSleeps => T("Henüz kayıtlı bir uyku yok.", "No sleep has been recorded yet.");
+    public static string SummaryShortSleep(string duration, string? cause) => T(
+        $"Bilgisayar son uykudan {duration} sonra uyandı. " + (cause is null ? "Windows uyandıranı kaydetmemiş." : $"Uyandıran: {cause}."),
+        $"The PC woke up {duration} after its last sleep. " + (cause is null ? "Windows didn't record what woke it." : $"Woken by: {cause}."));
+    public static string SummaryAllGood => T("Son uykularda bir sorun görünmüyor.", "Recent sleeps look fine.");
+
+    // ── Report: sections ──────────────────────────────────────────────────
+
+    public static string LastAttemptTitle => T("Son Force Sleep denemesi", "Last Force Sleep attempt");
+    public static string AttemptTime(DateTime at) => T("Zaman: ", "Time: ") + at.ToString(T("d MMMM HH:mm", "MMMM d HH:mm"), Culture);
+    public static string AttemptIncomplete => T("Deneme yarıda kalmış (uygulama kapatılmış olabilir).", "The attempt didn't finish (the app may have been closed).");
+    public static string Method(SleepMethod method) => method switch
+    {
+        SleepMethod.Normal => T("Normal uyku", "Normal sleep"),
+        SleepMethod.Forced => T("Zorla uyku", "Forced sleep"),
+        _ => T("Hazırda bekletme", "Hibernate"),
+    };
+    public static string Outcome(StepOutcome outcome) => outcome switch
+    {
+        StepOutcome.Slept => T("işe yaradı", "worked"),
+        StepOutcome.Refused => T("Windows reddetti", "Windows refused"),
+        StepOutcome.TimedOut => T("bilgisayar uyumadı", "the PC didn't sleep"),
+        _ => T("bilgisayar uyumadı, fare veya klavye kullanıldığı için devam edilmedi",
+               "the PC didn't sleep; stopped because the mouse or keyboard was used"),
+    };
+
+    public static string SleepsTitle => T("Son uykular", "Recent sleeps");
+    public static string NoSleepsRecorded => T("Kayıtlı bir uyku bulunamadı.", "No recorded sleeps found.");
+    public static string SleptFor(DateTime at, string duration) => at.ToString(T("d MMM HH:mm", "MMM d HH:mm"), Culture) + T($" — {duration} uyudu", $" — slept {duration}");
+    public static string WokenBy(string cause) => T($" · Uyandıran: {cause}", $" · Woken by: {cause}");
+    public static string Timer(string what) => T($"zamanlayıcı — {what}", $"timer — {what}");
+    public static string TimerSleepHint => T(
+        "Programlar bilgisayarı zamanlayıcıyla uyandırabilir. İstemiyorsan aşağıdaki \"Windows ayarları\" bölümünden uyandırma zamanlayıcılarını kapatabilirsin.",
+        "Programs can wake the PC with a timer. If you don't want that, turn off wake timers in the \"Windows settings\" section below.");
+
+    public static string WakeDevicesTitle => T("Bilgisayarı uyandırabilen aygıtlar", "Devices that can wake the PC");
+    public static string NoWakeDevices => T("Hiçbir aygıtın bilgisayarı uyandırmasına izin verilmemiş.", "No device is allowed to wake the PC.");
+    public static string DeviceCount(string kind, int count) => T($"{kind} ({count} aygıt)", $"{kind} ({count} devices)");
+    public static string NetworkWakeHint => T(
+        "Ağ kartının bilgisayarı uyandırmasına izin veriliyor. Ağ üzerinden uyandırma kullanmıyorsan bu, bilgisayarın kendi kendine uyanmasının sık sebeplerinden biridir.",
+        "The network card is allowed to wake the PC. If you don't use wake-on-LAN, this is a common reason for the PC waking up by itself.");
+    public static string MouseWakeHint => T(
+        "Hassas bir fare, masadaki küçük bir titreşimle bile bilgisayarı uyandırabilir.",
+        "A sensitive mouse can wake the PC from even a small bump of the desk.");
+    public static string DisableWake => T("Uyandırmasını kapat", "Stop it waking the PC");
+
+    public static string SettingsTitle => T("Windows ayarları", "Windows settings");
+    public static string AwayModeOn => T("Uzakta modu: açık — programlar uykuyu \"ekran kapalı ama çalışıyor\" moduna çevirebilir",
+        "Away mode: on — programs can turn sleep into \"screen off but still running\"");
+    public static string AwayModeOff => T("Uzakta modu: kapalı", "Away mode: off");
+    public static string WakeTimersOn => T("Uyandırma zamanlayıcıları: açık — programlar bilgisayarı belirli bir saatte uyandırabilir",
+        "Wake timers: on — programs can wake the PC at a set time");
+    public static string WakeTimersOff => T("Uyandırma zamanlayıcıları: kapalı", "Wake timers: off");
+    public static string TurnOff => T("Kapat", "Turn off");
+
+    public static string RequestsTitle => T("Uyanık kalmak isteyen programlar", "Programs asking to stay awake");
+    public static string NoRequests => T("Şu an uyanık kalmak isteyen bir program yok.", "No program is asking to stay awake right now.");
+    public static string RequestsHint => T(
+        "Ekranı açık tutma ve sistem istekleri genelde sadece otomatik uykuyu engeller; elle uyutmaya engel olmaz. \"Uzakta modu\" istekleri ise elle uyutmayı da etkileyebilir. \"Yok say\" dersen Windows o programın bu isteğini artık dikkate almaz.",
+        "Display and system requests usually only block automatic sleep, not sleep you start yourself. \"Away mode\" requests can affect both. \"Ignore\" makes Windows disregard that program's request.");
+    public static string Ignore => T("Yok say", "Ignore");
+    public static string RequestWhat(RequestKind kind) => kind switch
+    {
+        RequestKind.Display => T("ekranı açık tutmak istiyor", "wants to keep the screen on"),
+        RequestKind.System => T("otomatik uykuyu engelliyor", "is blocking automatic sleep"),
+        RequestKind.AwayMode => T("uyku yerine \"uzakta modu\" istiyor: ekran kapanır ama bilgisayar çalışmaya devam eder",
+                                  "wants \"away mode\" instead of sleep: the screen goes off but the PC keeps running"),
+        _ => T("çalışmaya devam etmek istiyor", "wants to keep running"),
+    };
+
+    public static string TimersTitle => T("Uyandırma zamanlayıcıları", "Wake timers");
+    public static string NoTimers => T("Bilgisayarı ileride uyandırmak için kurulmuş bir zamanlayıcı yok.", "No timer is set to wake the PC.");
+
+    public static string ChangesTitle => T("Force Sleep ile yaptığın değişiklikler", "Changes you made with Force Sleep");
+    public static string Undo => T("Geri al", "Undo");
+    public static string CannotWake(string device) => T($"{device} bilgisayarı uyandıramaz", $"{device} can't wake the PC");
+    public static string RequestIgnored(string source, string requests) => T(
+        $"{source} uykuyu engelleyemez (yok sayılan: {requests})", $"{source} can't block sleep (ignored: {requests})");
+    public static string SettingTurnedOff(string setting) => T($"{setting} kapatıldı", $"{setting} turned off");
+
+    public static string Duration(TimeSpan d) => d switch
+    {
+        { TotalMinutes: < 1 } => T($"{Math.Max(1, (int)d.TotalSeconds)} saniye", $"{Math.Max(1, (int)d.TotalSeconds)} seconds"),
+        { TotalHours: < 1 } => T($"{(int)d.TotalMinutes} dakika", $"{(int)d.TotalMinutes} minutes"),
+        { TotalDays: < 2 } => T($"{(int)d.TotalHours} saat {d.Minutes} dakika", $"{(int)d.TotalHours} h {d.Minutes} min"),
+        _ => T($"{d.Days} gün {d.Hours} saat", $"{d.Days} days {d.Hours} h"),
+    };
+
+    // ── Fixes ─────────────────────────────────────────────────────────────
+
+    public static string FixDevicesDone => T("Tamam, bu aygıtlar artık bilgisayarı uyandıramaz.", "Done, these devices can no longer wake the PC.");
+    public static string FixRequestDone(string source) => T($"Tamam, {source} artık bu şekilde uykuyu engelleyemez.", $"Done, {source} can no longer block sleep this way.");
+    public static string FixSettingDone(string setting) => T($"Tamam, {setting.ToLower(Culture)} kapatıldı.", $"Done, {setting.ToLower(Culture)} turned off.");
+    public static string SettingReadFailed => T("Ayar okunamadı.", "Couldn't read the setting.");
+    public static string SettingWriteFailed => T("Ayar değiştirilemedi.", "Couldn't change the setting.");
+    public static string UndoFailed => T("Ayar geri alınamadı.", "Couldn't undo the setting.");
+    public static string UndoDone => T("Değişiklik geri alındı.", "Change undone.");
+    public static string AdminDeclined => T("Yönetici izni verilmediği için değişiklik yapılmadı.", "Nothing changed because admin permission wasn't given.");
+    public static string FixFailed => T("Değişiklik yapılamadı. Ayrıntılar kayıt dosyasında.", "The change failed. See the log file for details.");
+    public static string SettingName(PowerSetting setting) => setting switch
+    {
+        PowerSetting.AwayMode => T("Uzakta modu", "Away mode"),
+        _ => T("Uyandırma zamanlayıcıları", "Wake timers"),
+    };
+
+    // ── Names of things ───────────────────────────────────────────────────
+
+    public static string Device(DeviceKind kind) => kind switch
+    {
+        DeviceKind.Keyboard => T("Klavye", "Keyboard"),
+        DeviceKind.Mouse => T("Fare", "Mouse"),
+        DeviceKind.Network => T("Ağ kartı", "Network card"),
+        DeviceKind.PowerButton => T("Güç düğmesi", "Power button"),
+        DeviceKind.Lid => T("Kapak", "Lid"),
+        DeviceKind.Usb => T("USB aygıtı", "USB device"),
+        _ => "",
+    };
+    public static string Service(string name) => T($"Windows hizmeti: {name}", $"Windows service: {name}");
+    public static string Driver(string name) => T($"Sürücü: {name}", $"Driver: {name}");
+    public static string ScheduledTask(string name, bool windowsUpdate) =>
+        T($"Zamanlanmış görev: {name}", $"Scheduled task: {name}") + (windowsUpdate ? " (Windows Update)" : "");
+}

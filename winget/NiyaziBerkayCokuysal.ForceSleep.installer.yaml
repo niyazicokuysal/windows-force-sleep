@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.9.0.schema.json
+# Template: build.ps1 fills in the $...$ placeholders and writes the result to dist/winget.
+
+PackageIdentifier: NiyaziBerkayCokuysal.ForceSleep
+PackageVersion: $VERSION$
+InstallerLocale: en-US
+MinimumOSVersion: 10.0.17763.0
+InstallerType: inno
+Scope: user
+InstallModes:
+- interactive
+- silent
+- silentWithProgress
+UpgradeBehavior: install
+ProductCode: '{1813EBC0-EB16-4920-9A13-150CFCE3E135}_is1'
+ReleaseDate: $RELEASEDATE$
+AppsAndFeaturesEntries:
+- DisplayName: Force Sleep
+  Publisher: Niyazi Berkay Çokuysal
+  ProductCode: '{1813EBC0-EB16-4920-9A13-150CFCE3E135}_is1'
+Installers:
+- Architecture: x64
+  InstallerUrl: $INSTALLERURL$
+  InstallerSha256: $SHA256$
+ManifestType: installer
+ManifestVersion: 1.9.0

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.9.0.schema.json
+# Template: build.ps1 fills in the $...$ placeholders and writes the result to dist/winget.
+
+PackageIdentifier: NiyaziBerkayCokuysal.ForceSleep
+PackageVersion: $VERSION$
+DefaultLocale: en-US
+ManifestType: version
+ManifestVersion: 1.9.0

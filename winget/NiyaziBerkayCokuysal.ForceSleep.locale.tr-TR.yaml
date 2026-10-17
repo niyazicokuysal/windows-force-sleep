@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.locale.1.9.0.schema.json
+# Template: build.ps1 fills in the $...$ placeholders and writes the result to dist/winget.
+
+PackageIdentifier: NiyaziBerkayCokuysal.ForceSleep
+PackageVersion: $VERSION$
+PackageLocale: tr-TR
+Publisher: Niyazi Berkay Çokuysal
+PackageName: Force Sleep
+License: $LICENSE$
+ShortDescription: Windows bilgisayarını gerçekten uyutur ve neden uyumadığını açıklar.
+Description: |-
+  Windows bazen gerçekten uyumaz: ekranlar kararır ama bilgisayar çalışmaya devam eder ve fareye dokununca hemen açılır.
+  Force Sleep, bilgisayarı uyutan, gerçekten uyuyup uyumadığını kontrol eden ve uyumadıysa zorla uykuya ya da hazırda bekletmeye geçen küçük bir tepsi uygulamasıdır.
+  "Neden uyumadı?" penceresi sebebi sade bir dille açıklar (uzakta modu, uyandırma zamanlayıcıları, bilgisayarı uyandırabilen aygıtlar, uyanık tutan programlar) ve tek tıkla, geri alınabilir şekilde düzeltir.
+Tags:
+- uyku
+- hazırda-bekletme
+- güç
+- sleep
+- hibernate
+ManifestType: locale
+ManifestVersion: 1.9.0

@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.9.0.schema.json
+# Template: build.ps1 fills in the $...$ placeholders and writes the result to dist/winget.
+
+PackageIdentifier: NiyaziBerkayCokuysal.ForceSleep
+PackageVersion: $VERSION$
+PackageLocale: en-US
+Publisher: Niyazi Berkay Çokuysal
+PublisherUrl: https://github.com/niyazicokuysal
+PublisherSupportUrl: $REPOURL$/issues
+Author: Niyazi Berkay Çokuysal
+PackageName: Force Sleep
+PackageUrl: $REPOURL$
+License: $LICENSE$
+ShortDescription: Puts your Windows PC to sleep for real, and explains why it didn't.
+Description: |-
+  Sometimes Windows doesn't really sleep: the screens go dark but the PC keeps running and wakes the moment you touch the mouse.
+  Force Sleep is a small tray app that puts the PC to sleep, checks that it actually slept, and falls back to forced sleep or hibernate if it didn't.
+  Its "Why didn't it sleep?" window explains the cause in plain words (away mode, wake timers, devices allowed to wake the PC, programs keeping it awake) and fixes it in one click, with undo.
+Moniker: force-sleep
+Tags:
+- sleep
+- hibernate
+- power
+- powercfg
+- standby
+- tray
+ReleaseNotesUrl: $REPOURL$/releases/tag/v$VERSION$
+ManifestType: defaultLocale
+ManifestVersion: 1.9.0
