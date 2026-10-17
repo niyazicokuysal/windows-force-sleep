@@ -25,6 +25,23 @@ internal static class PowerSettings
     private static readonly Guid SleepGroup = new("238c9fa8-0aad-41ed-83f4-97be242c8f20");
     private static readonly Guid AwayModeId = new("25dfa149-5dd1-4736-b5ab-e8a37b5b8187");
     private static readonly Guid WakeTimersId = new("bd3b718a-0680-4d9d-8ab2-e1d2b4ac806d");
+    private static readonly Guid SleepAfterId = new("29f6c1db-86da-48c5-9fdb-f2b67b1f44da");
+
+    /// <summary>
+    /// "Sleep after" from the active power plan for the current power source, or null for never.
+    /// </summary>
+    public static TimeSpan? WindowsSleepTimeout()
+    {
+        var seconds = WithActiveScheme(scheme =>
+        {
+            uint value;
+            var ok = Native.OnBattery()
+                ? Native.PowerReadDCValueIndex(IntPtr.Zero, scheme, SleepGroup, SleepAfterId, out value)
+                : Native.PowerReadACValueIndex(IntPtr.Zero, scheme, SleepGroup, SleepAfterId, out value);
+            return ok == 0 ? value : 0u;
+        });
+        return seconds == 0 ? null : TimeSpan.FromSeconds(seconds);
+    }
 
     public static PowerSettingValue? Read(PowerSetting setting)
     {

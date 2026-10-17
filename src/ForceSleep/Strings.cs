@@ -66,6 +66,96 @@ internal static class L
         ? T("Bilgisayar uyutulamadı. Menüden \"Hazırda beklet\"i deneyebilirsin.", "Couldn't put the PC to sleep. You can try \"Hibernate\" from the menu.")
         : T("Bilgisayar uyutulamadı.", "Couldn't put the PC to sleep.")) + ClickForDetails;
 
+    // ── Home ──────────────────────────────────────────────────────────────
+
+    public static string StatusReady => T("Hazır", "Ready");
+    public static string StatusReadyWatchdog => T("Bekçi açık: Windows uyumazsa Force Sleep uyutur.", "Watchdog on: if Windows doesn't sleep, Force Sleep will.");
+    public static string StatusReadyPlain => T("Bilgisayarı uyutmak için aşağıdaki düğmeye bas.", "Press the button below to put the PC to sleep.");
+    public static string StatusSleeping => T("Uyutuluyor…", "Going to sleep…");
+    public static string StatusTimer(TimeSpan left) => T($"{Remaining(left)} sonra uyuyacak", $"Sleeping in {Remaining(left)}");
+    public static string StatusTimerAt(DateTime at) => T($"Uyuma saati: {at:HH:mm}", $"At {at:HH:mm}");
+    public static string StatusKeepAwake => T("Uyanık tutuluyor", "Staying awake");
+    public static string StatusKeepAwakeLeft(TimeSpan left) => T($"{Remaining(left)} kaldı", $"{Remaining(left)} left");
+    public static string StatusKeepAwakeUntilStopped => T("Sen kapatana kadar", "Until you stop it");
+    public static string ScreenOff => T("Ekranı kapat", "Turn off screen");
+    public static string SleepTimerTitle => T("Uyku zamanlayıcısı", "Sleep timer");
+    public static string KeepAwakeTitle => T("Uyanık tut", "Keep awake");
+    public static string Minutes(int n) => T($"{n} dk", $"{n} min");
+    public static string Hours(int n) => T($"{n} sa", $"{n} h");
+    public static string UntilStopped => T("Süresiz", "No limit");
+    public static string CancelTimer => T("Zamanlayıcıyı iptal et", "Cancel timer");
+    public static string StopKeepAwake => T("Uyanık tutmayı bitir", "Stop keeping awake");
+    public static string HotkeyHint(string hotkey) => T($"Kısayol: {hotkey}", $"Shortcut: {hotkey}");
+    public static string Remaining(TimeSpan d) => d.TotalHours >= 1
+        ? T($"{(int)d.TotalHours} sa {d.Minutes} dk", $"{(int)d.TotalHours} h {d.Minutes} min")
+        : $"{d.Minutes}:{d.Seconds:00}";
+
+    public static string NavHome => T("Ana sayfa", "Home");
+    public static string NavSettings => T("Ayarlar", "Settings");
+    public static string OpenApp => T("Force Sleep'i aç", "Open Force Sleep");
+
+    // ── Countdown ─────────────────────────────────────────────────────────
+
+    public static string CountdownSleep => T("Bilgisayar uyutuluyor", "Putting the PC to sleep");
+    public static string CountdownHibernate => T("Bilgisayar hazırda bekletiliyor", "Hibernating the PC");
+    public static string CountdownIn(int seconds) => T($"{seconds} saniye içinde", $"in {seconds} seconds");
+    public static string CountdownNow => T("Hemen", "Now");
+    public static string Cancel => T("İptal", "Cancel");
+    public static string ReasonTimer => T("Uyku zamanlayıcısı doldu.", "The sleep timer is up.");
+    public static string ReasonAwayMode => T("Windows uyumak yerine ekranı kapatıp çalışmaya devam etti.", "Windows turned the screen off but kept running instead of sleeping.");
+    public static string ReasonWindowsDidNotSleep => T("Windows'un uyuması gereken zaman geçti ama uyumadı.", "Windows was due to sleep but didn't.");
+    public static string ReasonIdle(int minutes) => T($"Bilgisayar {minutes} dakikadır kullanılmıyor.", $"The PC hasn't been used for {minutes} minutes.");
+
+    public static string UnexpectedWake(DateTime at, string cause) => T(
+        // Time in parentheses: the Turkish suffix ('de/'da/'te/'ta) would depend on the number.
+        $"Bilgisayar kendi kendine uyandı ({at:HH:mm}). Uyandıran: {cause}.",
+        $"The PC woke up on its own at {at:HH:mm}. Woken by: {cause}.") + ClickForDetails;
+    public static string HotkeyInUse => T("Bu kısayol başka bir uygulama tarafından kullanılıyor.", "That shortcut is already used by another app.");
+
+    // ── Settings ──────────────────────────────────────────────────────────
+
+    public static string SettingsAutomatic => T("Otomatik", "Automatic");
+    public static string WatchdogTitle => T("Uyku bekçisi", "Sleep watchdog");
+    public static string WatchdogDesc => T(
+        "Windows uyuması gerekirken uyumazsa (örneğin ekran kapanıp bilgisayar çalışmaya devam ederse) Force Sleep uyutur.",
+        "If Windows should sleep but doesn't (for example the screen goes off but the PC keeps running), Force Sleep puts it to sleep.");
+    public static string IdleSleepTitle => T("Kullanılmayınca uyut", "Sleep when not in use");
+    public static string IdleSleepDesc => T(
+        "Bilgisayar seçtiğin süre boyunca kullanılmazsa, uyanık kalmak isteyen programlara rağmen uyutur.",
+        "Sleeps after the chosen time without use, even if programs ask to stay awake.");
+    public static string WaitForMediaTitle => T("Müzik veya video çalarken bekle", "Wait while music or video plays");
+    public static string WaitForMediaDesc => T("Otomatik uyutma, bir şey çalarken yapılmaz.", "Automatic sleep doesn't happen while something is playing.");
+    public static string NotifyWakeTitle => T("Beklenmedik uyanmaları bildir", "Tell me about unexpected wake-ups");
+    public static string NotifyWakeDesc => T(
+        "Bilgisayar sen dokunmadan uyanırsa (zamanlayıcı, ağ kartı…) neyin uyandırdığını gösterir.",
+        "If the PC wakes up without you (a timer, the network card…), shows what woke it.");
+    public static string SettingsWhenSleeping => T("Uyuturken", "When sleeping");
+    public static string CountdownSettingTitle => T("Geri sayım göster", "Show a countdown");
+    public static string CountdownSettingDesc => T("Uyutmadan önce 5 saniye bekler; bu sırada iptal edebilirsin.", "Waits 5 seconds before sleeping so you can cancel.");
+    public static string PauseMediaTitle => T("Çalan medyayı duraklat", "Pause playing media");
+    public static string PauseMediaDesc => T("Uyumadan önce müzik ve videoları duraklatır.", "Pauses music and videos before sleeping.");
+    public static string HibernateFallbackDesc => T(
+        "Uyku hiçbir şekilde tutmazsa bilgisayarı açık bırakmak yerine hazırda bekletir.",
+        "If sleep can't be achieved, hibernates instead of leaving the PC on.");
+    public static string ShortcutTitle => T("Klavye kısayolu", "Keyboard shortcut");
+    public static string ShortcutDesc => T("Her yerden uyutmak için. Kutuya tıklayıp yeni kısayola bas.", "Sleep from anywhere. Click the box and press a new shortcut.");
+    public static string ShortcutNone => T("Yok", "None");
+    public static string ShortcutPress => T("Kısayola bas…", "Press a shortcut…");
+    public static string Remove => T("Kaldır", "Remove");
+    public static string SettingsAppearance => T("Görünüm", "Appearance");
+    public static string ThemeTitle => T("Tema", "Theme");
+    public static string ThemeSystem => T("Windows ile aynı", "Same as Windows");
+    public static string ThemeLight => T("Açık", "Light");
+    public static string ThemeDark => T("Koyu", "Dark");
+    public static string LanguageTitle => T("Dil", "Language");
+    public static string SettingsStartup => T("Başlangıç", "Startup");
+    public static string StartWithWindowsDesc => T("Oturum açınca tepside sessizce başlar.", "Starts quietly in the tray when you sign in.");
+    public static string SettingsAbout => T("Hakkında", "About");
+    public static string VersionText(string version) => T($"Sürüm {version}", $"Version {version}");
+    public static string SourceCode => T("GitHub'da kaynak kodu", "Source code on GitHub");
+    public static string QuitApp => T("Force Sleep'ten çık", "Quit Force Sleep");
+    public static string Yes => T("Evet", "Yes");
+
     // ── Diagnostics window ────────────────────────────────────────────────
 
     public static string WindowTitle => T("Neden uyumadı? – Force Sleep", "Why didn't it sleep? – Force Sleep");

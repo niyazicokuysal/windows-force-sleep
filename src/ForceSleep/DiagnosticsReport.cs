@@ -142,7 +142,7 @@ internal sealed record DiagnosticsReport(string Summary, IReadOnlyList<ReportSec
         return WakeCause(sleep) is { } cause ? text + L.WokenBy(cause) : text;
     }
 
-    private static string? WakeCause(SleepRecord sleep)
+    public static string? WakeCause(SleepRecord sleep)
     {
         if (sleep.WakeTimerOwner is { } owner)
         {

@@ -1,0 +1,27 @@
+<Window x:Class="ForceSleep.Ui.ConfirmDialog" x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:fs="clr-namespace:ForceSleep"
+        FontFamily="{StaticResource UiFont}"
+        Title="Force Sleep" Width="440" SizeToContent="Height"
+        WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
+    <Border BorderBrush="{DynamicResource SurfaceStrokeColorFlyoutBrush}" BorderThickness="1">
+        <StackPanel>
+            <TextBlock x:Name="Message" Style="{StaticResource BodyText}" Margin="24,24,24,24" />
+            <Border Background="{DynamicResource LayerFillColorDefaultBrush}" Padding="24,16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="{x:Static fs:L.Yes}" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Stretch"
+                            Height="34" IsDefault="True" Click="OnYes" />
+                    <Button Grid.Column="2" Content="{x:Static fs:L.Cancel}" HorizontalAlignment="Stretch" Height="34" IsCancel="True" />
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Border>
+</Window>

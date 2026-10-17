@@ -1,0 +1,39 @@
+<Window x:Class="ForceSleep.Ui.FlyoutWindow" x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:fs="clr-namespace:ForceSleep"
+        FontFamily="{StaticResource UiFont}"
+        Title="Force Sleep" Width="380" SizeToContent="Height"
+        WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True"
+        Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
+    <Border BorderBrush="{DynamicResource SurfaceStrokeColorFlyoutBrush}" BorderThickness="1">
+        <StackPanel>
+            <!-- Header -->
+            <Grid Margin="16,12,8,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="pack://application:,,,/ForceSleep;component/Ui/ForceSleep.ico" Width="18" Height="18" />
+                    <TextBlock Text="Force Sleep" Style="{StaticResource BodyText}" FontWeight="SemiBold" Margin="8,0,0,0" />
+                </StackPanel>
+                <Button Grid.Column="1" ToolTip="{x:Static fs:L.WhyDidntItSleep}" Click="OnWhy" Padding="8" Background="Transparent" BorderThickness="0">
+                    <TextBlock Text="&#xE9CE;" Style="{StaticResource Icon}" />
+                </Button>
+                <Button Grid.Column="2" ToolTip="{x:Static fs:L.NavSettings}" Click="OnSettings" Padding="8" Background="Transparent" BorderThickness="0">
+                    <TextBlock Text="&#xE713;" Style="{StaticResource Icon}" />
+                </Button>
+            </Grid>
+
+            <ContentControl x:Name="Home" Margin="16,4,16,8" />
+
+            <!-- Footer -->
+            <Border Background="{DynamicResource LayerFillColorDefaultBrush}" BorderBrush="{DynamicResource DividerStrokeColorDefaultBrush}"
+                    BorderThickness="0,1,0,0" Padding="16,10">
+                <Button Style="{StaticResource LinkButton}" Content="{x:Static fs:L.OpenApp}" HorizontalAlignment="Left" Click="OnOpen" />
+            </Border>
+        </StackPanel>
+    </Border>
+</Window>

@@ -1,291 +1,325 @@
-<p align="center"><img src="assets/icon-256.png" width="110" alt="Force Sleep simgesi"></p>
+<p align="center"><img src="assets/icon-256.png" width="110" alt="Force Sleep icon"></p>
 
 <h1 align="center">Force Sleep</h1>
 
 <p align="center">
-  <b>Windows bilgisayarını gerçekten uyutan küçük bir tepsi uygulaması.</b><br>
-  Ekranlar kararıp bilgisayar çalışmaya devam ediyorsa, nedenini bulur ve düzeltir.
+  <b>A small tray app that puts your Windows PC to sleep — for real.</b><br>
+  If the screens go dark but the PC keeps running, it finds out why and fixes it.
 </p>
 
 <p align="center">
-  <a href="https://github.com/niyazicokuysal/windows-force-sleep/releases/latest"><img src="https://img.shields.io/github/v/release/niyazicokuysal/windows-force-sleep?label=s%C3%BCr%C3%BCm&color=f5c542" alt="Son sürüm"></a>
-  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-1b2646?logo=windows" alt="Windows 10 ve 11">
+  <a href="https://github.com/niyazicokuysal/windows-force-sleep/releases/latest"><img src="https://img.shields.io/github/v/release/niyazicokuysal/windows-force-sleep?color=f5c542" alt="Latest release"></a>
+  <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-1b2646?logo=windows" alt="Windows 10 and 11">
   <img src="https://img.shields.io/badge/.NET-10-512bd4?logo=dotnet" alt=".NET 10">
-  <img src="https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e%20%7C%20English-1b2646" alt="Türkçe ve İngilizce">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/lisans-MIT-1b2646" alt="MIT lisansı"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1b2646" alt="MIT license"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/niyazicokuysal/windows-force-sleep/releases/latest"><b>⬇️ İndir</b></a> ·
-  <a href="#kullanım">Kullanım</a> ·
-  <a href="#neden-uyumadı">Neden uyumadı?</a> ·
-  <a href="#sık-sorulan-sorular">SSS</a> ·
-  <a href="README.en.md">English</a>
+  <a href="https://github.com/niyazicokuysal/windows-force-sleep/releases/latest"><b>⬇️ Download</b></a> ·
+  <a href="#usage">Usage</a> ·
+  <a href="#sleep-watchdog">Sleep watchdog</a> ·
+  <a href="#why-didnt-it-sleep">Why didn't it sleep?</a> ·
+  <a href="#faq">FAQ</a>
 </p>
 
 ---
 
-Uyku'ya basıyorsun, ekranlar kararıyor ama bilgisayar aslında çalışmaya devam ediyor. Fareye dokunduğun anda da hiçbir şey olmamış gibi açılıyor. Bu tanıdık geliyorsa Force Sleep tam bunun için.
+You click Sleep, the screens go dark, but the PC actually keeps running — and the moment you touch the mouse it's back as if nothing happened. If that sounds familiar, Force Sleep is for you.
+
+<p align="center">
+  <img src="docs/home.png" width="560" alt="Home (light theme)">
+  &nbsp;
+  <img src="docs/panel.png" width="250" alt="Tray panel (dark theme)">
+</p>
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <h3>🌙 Tek tıkla uyku</h3>
-      Saatin yanındaki ay simgesi → <i>Şimdi uyut</i>. Hepsi bu.
+      <h3>🌙 One-click sleep</h3>
+      Click the moon in the tray → <i>Sleep now</i>. Or press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>End</kbd> from anywhere.
     </td>
     <td width="50%" valign="top">
-      <h3>✅ Gerçekten uyudu mu?</h3>
-      Bilgisayarın gerçekten uyuyup uyumadığını kontrol eder. Uyumadıysa zorla uykuya, o da olmazsa hazırda bekletmeye geçer.
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>🔍 Neden uyumadı?</h3>
-      Bilgisayarı neyin uyandırdığını ve neyin uyanık tuttuğunu teknik terimler kullanmadan gösterir.
-    </td>
-    <td width="50%" valign="top">
-      <h3>🛠️ Tek tıkla düzeltme</h3>
-      Uzakta modu, uyandırma zamanlayıcıları, aygıtlar, programlar… Her değişiklik <i>Geri al</i> ile geri alınabilir.
+      <h3>🛡️ Sleep watchdog</h3>
+      If Windows should sleep but doesn't — screen off, PC still running — Force Sleep notices and puts it to sleep.
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h3>🔒 Gizli ve hafif</h3>
-      Kurulum için yönetici izni istemez, internete hiç bağlanmaz, verilerin bilgisayarından çıkmaz.
+      <h3>⏱️ Sleep timer &amp; keep awake</h3>
+      "Sleep in 30 minutes", or the opposite: "don't sleep for 2 hours". One tap each.
     </td>
     <td width="50%" valign="top">
-      <h3>🌐 Türkçe ve English</h3>
-      Windows'un dilini otomatik seçer, menüden istediğin zaman değiştirebilirsin.
+      <h3>✅ Did it really sleep?</h3>
+      Force Sleep checks. If not, it escalates to forced sleep, then hibernate.
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🔍 Why didn't it sleep?</h3>
+      Shows what woke the PC or keeps it awake, in plain words — and fixes it in one click, with undo.
+    </td>
+    <td width="50%" valign="top">
+      <h3>🎨 Modern and private</h3>
+      Windows 11 style, light and dark theme, English and Turkish. Never connects to the internet.
     </td>
   </tr>
 </table>
 
-<p align="center"><img src="docs/neden-uyumadi.png" width="640" alt="Neden uyumadı? penceresi"></p>
+---
+
+## Contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [Sleep watchdog](#sleep-watchdog)
+- [Sleep or hibernate?](#sleep-or-hibernate)
+- [Why didn't it sleep?](#why-didnt-it-sleep)
+- [Settings](#settings)
+- [How it works](#how-it-works)
+- [FAQ](#faq)
+- [Command line](#command-line)
+- [Development](#development)
+- [Roadmap](#roadmap)
 
 ---
 
-## İçindekiler
+## Install
 
-- [Kurulum](#kurulum)
-- [Kullanım](#kullanım)
-- [Şimdi uyut mu, hazırda beklet mi?](#şimdi-uyut-mu-hazırda-beklet-mi)
-- [Neden uyumadı?](#neden-uyumadı)
-- [Nasıl çalışır?](#nasıl-çalışır)
-- [Sık sorulan sorular](#sık-sorulan-sorular)
-- [Komut satırı](#komut-satırı)
-- [Geliştirme](#geliştirme)
-- [Sürüm yayınlama](#sürüm-yayınlama)
-- [Yol haritası](#yol-haritası)
+Download `ForceSleep-Setup-<version>.exe` from the [latest release](https://github.com/niyazicokuysal/windows-force-sleep/releases/latest) and run it.
+
+- No admin rights needed; installs for your user only.
+- The installer asks for the language (English or Turkish) and whether to start with Windows.
+- To uninstall: *Settings › Apps › Force Sleep › Uninstall*.
 
 ---
 
-## Kurulum
+## Usage
 
-**Kurulum dosyasıyla:** [Releases](https://github.com/niyazicokuysal/windows-force-sleep/releases) sayfasından `ForceSleep-Setup-<sürüm>.exe` dosyasını indir ve çalıştır. Kurulum yönetici izni istemez. Sihirbazda dili seçebilir ve uygulamanın Windows ile birlikte başlayıp başlamayacağını belirleyebilirsin.
+Force Sleep lives in the **moon icon** next to the clock. If you don't see it, click the **^** arrow left of the clock; drag the icon onto the taskbar to keep it visible.
 
-**winget ile** (winget kataloğuna eklendikten sonra):
+| Where | What opens |
+|---|---|
+| **Left-click** the moon | Quick panel: *Sleep now*, *Hibernate*, *Turn off screen*, sleep timer, keep awake |
+| **Right-click** the moon | Short menu: Sleep now, Open, Why didn't it sleep?, Exit |
+| Start menu › **Force Sleep** | Main window: Home, Why didn't it sleep?, Settings |
+| <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>End</kbd> | Sleep from anywhere (changeable in Settings) |
+
+**Before sleeping**, a 5-second countdown lets you *Cancel*, or go *Now*. Music and videos that are playing get paused.
+
+<p align="center"><img src="docs/countdown.png" width="380" alt="Countdown before sleeping"></p>
+
+- **Sleep timer:** sleeps after 15 min, 30 min, 1 h or 2 h — handy when falling asleep to a film or music. The time left shows in the panel.
+- **Keep awake:** stops the PC from sleeping on its own for a while (or until you stop it), e.g. during a big download. The watchdog stays out of the way meanwhile.
+- **Turn off screen:** turns the monitors off without sleeping.
+
+---
+
+## Sleep watchdog
+
+The headline feature. It doesn't matter how the sleep started — Start › Sleep, the power button, or Windows' own timer.
+
+| The watchdog notices | It does |
+|---|---|
+| Windows went into **away mode** instead of sleeping (screen off, PC running) | Sleeps after 30 seconds without input |
+| Windows' *"sleep after"* time passed 2 minutes ago, the screen is off, the PC is still awake | Sleeps |
+
+It's careful not to sleep at the wrong time. It waits:
+
+- **While media plays** — music or video (optional).
+- **While *keep awake* is on.**
+- **For 5 minutes after a wake-up** — an update or timer may have woken the PC on purpose.
+- **After an attempt that didn't work**, rather than retrying in a loop.
+- **When Windows is set to never sleep** — that choice is respected.
+
+**Sleep when not in use** (off by default) is your own idle timer, e.g. "sleep after 30 minutes without use". Unlike Windows' own, it ignores programs asking to stay awake.
+
+**Unexpected wake-up notifications** tell you when the PC woke up without you — a timer, the network card — and what did it. Click the notification to open *Why didn't it sleep?*.
+
+---
+
+## Sleep or hibernate?
+
+Both let you pick up where you left off. The difference is **where** your open work is kept:
+
+- **Sleep** keeps everything in **RAM**, which needs a trickle of power.
+- **Hibernate** writes everything to **disk** and powers off completely.
+
+| | 💤 Sleep | 🧊 Hibernate |
+|---|---|---|
+| Wakes up | Very fast (1–3 s) | Slower (10–30 s) |
+| Power use | Very little | None |
+| If power is cut | Unsaved work is lost | Nothing is lost |
+| Woken by | Mouse, keyboard, power button | Power button only |
+| Wakes by itself | Can happen | Very rare |
+
+Sleep for short breaks; hibernate when you'll be away for long or sleep just won't stick.
+
+---
+
+## Why didn't it sleep?
+
+<p align="center"><img src="docs/why.png" width="640" alt="Why didn't it sleep? page"></p>
+
+This page explains, in plain words:
+
+- **The last Force Sleep attempt** and which step worked.
+- **Recent sleeps** — how long they lasted and what woke the PC.
+- **Devices allowed to wake the PC** — keyboards, mice, the network card.
+- **Windows settings** — whether away mode and wake timers are on.
+
+**Detailed scan** (asks for admin once) also lists programs and drivers keeping the PC awake, and wake timers.
+
+### One-click fixes
+
+| Link | What it does | Admin |
+|---|---|---|
+| **Turn off** (Away mode) | Programs can no longer turn sleep into "screen off but still running". | No |
+| **Turn off** (Wake timers) | Programs can no longer wake the PC at a set time. | No |
+| **Stop it waking the PC** (devices) | That device can no longer wake the PC. Asks first for keyboards and mice. | Yes |
+| **Ignore** (programs) | Windows disregards that program's stay-awake request. | Yes |
+
+Every change is listed under **Changes you made with Force Sleep** with an **Undo** link.
+
+For admin tasks, Force Sleep starts a copy of itself elevated once, which only accepts an allow-list of `powercfg` commands and never goes through a shell — so a malicious device or program name can't smuggle in anything else.
+
+---
+
+## Settings
+
+<p align="center"><img src="docs/settings.png" width="640" alt="Settings"></p>
+
+| Setting | Default |
+|---|---|
+| Sleep watchdog | On |
+| Sleep when not in use (15 min – 2 h) | Off |
+| Wait while music or video plays | On |
+| Tell me about unexpected wake-ups | On |
+| Show a countdown | On |
+| Pause playing media | On |
+| Hibernate if sleep fails | On |
+| Keyboard shortcut | <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>End</kbd> |
+| Theme | Same as Windows (or light / dark) |
+| Language | Windows language (or English / Turkish) |
+| Start with Windows | Chosen during setup |
+
+---
+
+## How it works
+
+```
+ Normal sleep ──(not asleep within 12 s)──▶ Forced sleep ──(still not)──▶ Hibernate
+                                                                        (if enabled)
+```
+
+1. **Normal sleep** — the same as Start › Sleep.
+2. **Forced sleep** — sleeps without first asking apps and drivers, so they can't veto it.
+3. **Hibernate** — the last resort.
+
+**Did it really sleep?** Windows has two clocks: one counts time spent asleep, the other doesn't. The difference is how long the PC slept. As a backup, Force Sleep reads the wake event Windows logs after every sleep and hibernate.
+
+**How does the watchdog know?** Windows tells apps when the display turns on or off and when away mode starts or ends. Force Sleep listens for those, and every 10 seconds checks idle time and Windows' sleep setting.
+
+**Modern Standby PCs** (some newer laptops) have no classic sleep. Force Sleep detects this and uses hibernate there.
+
+---
+
+## FAQ
+
+**Windows says "Windows protected your PC".**
+The installer isn't code-signed yet, so SmartScreen warns. Choose *More info → Run anyway*.
+
+**I closed the window — is Force Sleep gone?**
+No, it keeps running in the moon icon. To quit, right-click the moon → *Exit*, or *Settings › Quit Force Sleep*.
+
+**The shortcut doesn't work.**
+Another app may already use it; the Settings page says so. Click the box and press a different shortcut.
+
+**The watchdog put the PC to sleep during a film.**
+Video players usually keep the screen on, and the watchdog never acts while the screen is on. Some players don't report to Windows' media controls, so Force Sleep can't see them playing — use *Keep awake* for those.
+
+**Does it need admin rights?**
+Not to install or to sleep. Only *Detailed scan* and some fixes (stopping a device from waking the PC, ignoring a program's request) ask once.
+
+**Is any data sent anywhere?**
+No, Force Sleep never connects to the internet. Settings and the log stay on your PC:
+
+- `%APPDATA%\ForceSleep\settings.json` — settings
+- `%APPDATA%\ForceSleep\log.txt` — a log of attempts; attach it when reporting a problem.
+
+**What happens to my fixes when I uninstall?**
+They're Windows settings, so they stay. Use **Undo** before uninstalling if you want them reverted.
+
+---
+
+## Command line
+
+| Command | What it does |
+|---|---|
+| `ForceSleep.exe` | Opens the app, or brings the running one's window to the front. |
+| `ForceSleep.exe --why` / `--settings` | Opens straight to *Why didn't it sleep?* or *Settings*. |
+| `ForceSleep.exe --sleep` | Sleeps once without opening a window — for shortcuts and scripts. |
+| `ForceSleep.exe --diagnose` | Prints the *Why didn't it sleep?* report as text. |
+| `ForceSleep.exe --status` | Prints the version, supported sleep states, Windows' sleep timeout and media state. |
+
+---
+
+## Development
+
+Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download) on Windows 10 or 11, and [Inno Setup 6](https://jrsoftware.org/isinfo.php) for the installer (`winget install JRSoftware.InnoSetup`).
 
 ```powershell
-winget install NiyaziBerkayCokuysal.ForceSleep
+dotnet build
+dotnet test
+./build.ps1                                # tests → exe → installer → winget manifests, in dist/
+./build.ps1 -CertificateThumbprint <...>   # the same, signed with signtool
 ```
 
-Kaldırmak için: *Ayarlar › Uygulamalar › Force Sleep › Kaldır* ya da `winget uninstall NiyaziBerkayCokuysal.ForceSleep`.
+Debug builds accept `--light`, `--dark`, `--english`, `--panel` (opens the tray panel) and `--countdown` (shows the countdown without sleeping) for working on the UI.
 
----
-
-## Kullanım
-
-1. Force Sleep'i Başlat menüsünden aç. *"Çalışıyor"* bildirimi gelir.
-2. Saatin yanında sarı bir **ay simgesi** belirir.
-   Görmüyorsan saatin solundaki **^** okuna tıkla. Simgeyi görev çubuğuna sürüklersen hep görünür kalır.
-3. Simgeye tıkla ve **Şimdi uyut**'u seç.
-
-### Menü
-
-| Seçenek | Ne yapar |
-|---|---|
-| **Şimdi uyut** | Bilgisayarı uyutur. Uyumazsa daha güçlü yöntemleri sırayla dener. |
-| **Hazırda beklet** | Bilgisayarı doğrudan hazırda bekletir. |
-| **Neden uyumadı?** | Uyku sorunlarının sebebini gösteren ve düzelten pencereyi açar. |
-| **Uyumazsa hazırda beklet** | Uyku hiçbir şekilde tutmazsa bilgisayarı açık bırakmak yerine hazırda bekletir. *(Varsayılan: açık)* |
-| **Windows açılınca başlat** | Force Sleep oturum açınca sessizce başlar. |
-| **Dil / Language** | Türkçe, English ya da Windows'un diline göre otomatik. |
-| **Çıkış** | Uygulamayı kapatır. |
-
-Bir şey yolunda gitmezse bir bildirim gelir. Örneğin uyku engellenip zorla uyutulduysa ya da bilgisayar birkaç saniye içinde uyandıysa. Bildirime tıklarsan ayrıntıları gösteren pencere açılır.
-
----
-
-## Şimdi uyut mu, hazırda beklet mi?
-
-İkisi de bilgisayarı kapatıp kaldığın yerden devam etmeni sağlar. Fark, açık olan her şeyin **nerede saklandığında**:
-
-- **Uyku:** Her şey **RAM'de** kalır. RAM bilgiyi tutmak için elektrik ister, bu yüzden bilgisayar çok az da olsa güç çekmeye devam eder.
-- **Hazırda bekletme:** Her şey **diske** yazılır ve bilgisayar tamamen kapanır.
-
-| | 💤 Şimdi uyut | 🧊 Hazırda beklet |
-|---|---|---|
-| Uyanma hızı | Çok hızlı (1–3 sn) | Daha yavaş (10–30 sn) |
-| Elektrik tüketimi | Çok az | Yok |
-| Elektrik kesilirse | Kaydedilmemiş iş gider | Hiçbir şey kaybolmaz |
-| Nasıl uyanır | Fare, klavye, güç düğmesi | Sadece güç düğmesi |
-| Kendi kendine uyanma | Olabilir | Çok nadir |
-
-**Hangisini seçmeli?** Kısa molalarda, örneğin gece ya da birkaç saat için, **Şimdi uyut** daha pratik. Uzun süre kullanmayacaksan ya da uyku bir türlü tutmuyorsa **Hazırda beklet** daha güvenli.
-
----
-
-## Neden uyumadı?
-
-Bu pencere şunları sade bir dille gösterir:
-
-- **Son Force Sleep denemesi:** Hangi adımın işe yaradığını gösterir.
-- **Son uykular:** Ne kadar sürdüklerini ve bilgisayarı neyin uyandırdığını gösterir. Bu bir fare, ağ kartı ya da Windows Update'in kurduğu bir zamanlayıcı olabilir.
-- **Bilgisayarı uyandırabilen aygıtlar:** Uyandırma izni olan klavye, fare ve ağ kartlarını listeler.
-- **Windows ayarları:** Uzakta modunun ve uyandırma zamanlayıcılarının açık olup olmadığını gösterir.
-
-**Ayrıntılı tara** (bir kez yönetici izni ister) ayrıca şunları gösterir:
-
-- **Uyanık kalmak isteyen programlar ve sürücüler:** Örneğin video oynatan bir tarayıcı sekmesi ya da kullanımdaki bir ses sürücüsü.
-- **Uyandırma zamanlayıcıları:** Bilgisayarı ileride uyandırmak için kurulmuş görevler.
-
-### Tek tıkla düzeltme
-
-Sorunlu satırların yanında bir bağlantı çıkar:
-
-| Bağlantı | Ne yapar | Yönetici izni |
-|---|---|---|
-| **Kapat** (Uzakta modu) | Programlar uykuyu "ekran kapalı ama çalışıyor" moduna çeviremez. *"Ekran kapanıyor ama bilgisayar çalışıyor" sorununun tipik sebebi budur.* | Hayır |
-| **Kapat** (Uyandırma zamanlayıcıları) | Programlar bilgisayarı belirli bir saatte uyandıramaz. | Hayır |
-| **Uyandırmasını kapat** (aygıtlar) | O aygıt (örneğin ağ kartı) artık bilgisayarı uyandıramaz. Klavye ve fare için önce onay sorulur. | Evet |
-| **Yok say** (programlar) | Windows o programın uyanık kalma isteğini artık dikkate almaz. | Evet |
-
-Yapılan her değişiklik **Force Sleep ile yaptığın değişiklikler** bölümünde listelenir ve **Geri al** ile eski haline döner.
-
-Yönetici izni gereken işlerde Force Sleep kendini bir kereliğine yönetici olarak başlatır ve sadece şu komutları çalıştırır: aygıt uyandırmayı açma/kapama ve istek yok sayma. Komutlar bir kabuktan (cmd) geçmez. Böylece kötü niyetli bir program, adına özel karakterler koyarak yönetici yetkisiyle başka bir şey çalıştıramaz.
-
----
-
-## Nasıl çalışır?
-
-*Şimdi uyut*'a bastığında Force Sleep sırayla şu adımları dener:
-
-```
- Normal uyku ──(12 sn içinde uyumadı)──▶ Zorla uyku ──(uyumadı)──▶ Hazırda bekletme
-                                                                  (ayar açıksa)
-```
-
-1. **Normal uyku:** Başlat › Uyku ile aynı şeyi yapar.
-2. **Zorla uyku:** Uygulamalara ve sürücülere "uyuyabilir miyim?" diye sorulmadan uykuya geçilir. Böylece itiraz edip uykuyu engelleyemezler.
-3. **Hazırda bekletme:** Son çare olarak devreye girer.
-
-**"Gerçekten uyudu mu?" nasıl anlaşılıyor?** Windows'ta iki saat var: biri uykuda geçen süreyi sayar, diğeri saymaz. Aradaki fark, bilgisayarın ne kadar uyuduğunu verir. Bu yeterli olmazsa Windows'un her uyanmadan sonra olay günlüğüne yazdığı kayda da bakılır.
-
-**Fareye dokunursan ne olur?** Adımlar sürerken fare veya klavye kullanılırsa Force Sleep bir sonraki, daha sert adıma geçmez. Muhtemelen bilgisayarın başına döndüğünü varsayar.
-
-**Modern Standby bilgisayarlar:** Bazı yeni laptoplarda klasik uyku hiç yoktur. Bu bilgisayarlardaki "uyku", ekranın kapalı olduğu ama sistemin çalışmaya devam ettiği bir moddur. Force Sleep bunu otomatik algılar ve bu bilgisayarlarda hazırda bekletmeyi kullanır.
-
----
-
-## Sık sorulan sorular
-
-**"Windows bilgisayarınızı korudu" uyarısı çıkıyor.**
-Kurulum dosyası henüz dijital olarak imzalanmadığı için SmartScreen bu uyarıyı gösteriyor. *Ek bilgi* → *Yine de çalıştır* ile devam edebilirsin.
-
-**Yönetici izni gerekiyor mu?**
-Kurmak ve uyutmak için hayır. *Neden uyumadı?* penceresindeki **Ayrıntılı tara** düğmesi ile bazı düzeltmeler (aygıt uyandırmayı kapatma, program isteğini yok sayma) her seferinde bir kez izin ister.
-
-**Verilerim bir yere gönderiliyor mu?**
-Hayır, uygulama internete hiç bağlanmaz. Ayarlar ve kayıtlar sadece senin bilgisayarında durur:
-
-- `%APPDATA%\ForceSleep\settings.json`: ayarlar
-- `%APPDATA%\ForceSleep\log.txt`: denemelerin kaydı. Bir sorun bildirirken bu dosyayı eklemek çok yardımcı olur.
-
-**Uygulamayı kaldırınca yaptığım değişiklikler ne olur?**
-*Neden uyumadı?* penceresinden yaptığın değişiklikler (uzakta modu, aygıtlar vb.) Windows ayarlarıdır. Uygulama kaldırılsa da bu ayarlar kalır. Geri almak istiyorsan kaldırmadan önce **Geri al**'a bas.
-
-**Uygulama Windows'un dilinde değil.**
-Menüden **Dil / Language**'ı seç.
-
----
-
-## Komut satırı
-
-| Komut | Ne yapar |
-|---|---|
-| `ForceSleep.exe --sleep` | Tepsi simgesi olmadan bir kez uyutur. Masaüstü kısayolu veya script için uygundur. |
-| `ForceSleep.exe --why` | Sadece *Neden uyumadı?* penceresini açar. |
-| `ForceSleep.exe --diagnose` | Aynı raporu metin olarak yazdırır. |
-| `ForceSleep.exe --status` | Sürümü ve bilgisayarın desteklediği uyku türlerini yazdırır. |
-
----
-
-## Geliştirme
-
-Gerekenler: [.NET 10 SDK](https://dotnet.microsoft.com/download), Windows 10 veya 11. Kurulum dosyası için ayrıca [Inno Setup 6](https://jrsoftware.org/isinfo.php) (`winget install JRSoftware.InnoSetup`).
-
-```powershell
-dotnet build              # derle
-dotnet test               # testleri çalıştır
-./build.ps1 -License MIT  # sürüm üret: test → exe → kurulum dosyası → winget dosyaları
-```
-
-### Proje yapısı
+### Project layout
 
 ```
 src/ForceSleep/
-  TrayApp.cs            Tepsi simgesi, menü ve bildirimler
-  Strings.cs            Tüm arayüz metinleri, Türkçe ve İngilizce yan yana
-  SleepController.cs    Normal → zorla → hazırda bekletme sırası ve doğrulama
-  SleepClock.cs         "Gerçekten uyudu mu?" saati
-  DiagnosticsForm.cs    "Neden uyumadı?" penceresi
-  DiagnosticsReport.cs  Toplanan bilgiyi sade bir dile çeviren rapor
-  Fixes.cs              Tek tıkla düzeltmeler ve geri alma
-  PowerSettings.cs      Güç planı ayarları (uzakta modu, uyandırma zamanlayıcıları)
-  PowerCfg.cs           powercfg çıktısını ayrıştırma ve yönetici olarak komut çalıştırma
-  SleepHistory.cs       Olay günlüğünden geçmiş uykular
-  AttemptHistory.cs     Force Sleep'in kendi denemeleri (log'dan)
-  PowerCapabilities.cs  Bilgisayarın desteklediği uyku türleri
-  Native.cs             Windows API çağrıları
-tests/ForceSleep.Tests/ Ayrıştırıcı, rapor ve dil testleri
-installer/              Inno Setup kurulum script'i
-winget/                 winget dosya şablonları
-assets/                 Simge (tools/make-icon.ps1 ile üretilir)
+  AppController.cs      The app's brain: sleeping, timer, keep awake, watchdog, hotkey, notifications
+  SleepPolicy.cs        Watchdog and idle-sleep rules (a pure function, unit tested)
+  SleepController.cs    Normal → forced → hibernate escalation and verification
+  SystemEvents.cs       Display on/off, away mode, resume and hotkey events
+  KeepAwake.cs          Keeping the PC awake
+  MediaControl.cs       Detecting and pausing media through Windows' media controls
+  Hotkey.cs             The global keyboard shortcut
+  Strings.cs            All UI text, Turkish and English side by side
+  DiagnosticsReport.cs  The "Why didn't it sleep?" report
+  Fixes.cs              One-click fixes and undo
+  PowerCfg.cs, PowerSettings.cs, SleepHistory.cs, AttemptHistory.cs, …
+  Ui/                   WPF UI with the Fluent theme: main window, tray panel, countdown, pages
+tests/ForceSleep.Tests/ Watchdog, hotkey, parser, report and language tests
+installer/              Inno Setup script
+winget/                 winget manifest templates
 ```
 
-**Yeni bir metin eklerken** `Strings.cs`'e hem Türkçesini hem İngilizcesini yaz. Bir metin iki dilde aynı kalırsa test başarısız olur.
+When adding UI text, add both languages to `Strings.cs` — a test fails if a text is left untranslated.
+
+**Releasing:** bump `<Version>` in `ForceSleep.csproj`, run `./build.ps1`, and attach `dist/ForceSleep-Setup-<version>.exe` to a GitHub release tagged `v<version>`.
 
 ---
 
-## Sürüm yayınlama
+## Roadmap
 
-1. `src/ForceSleep/ForceSleep.csproj` içindeki `<Version>`'ı artır.
-2. `./build.ps1 -License <lisans>` çalıştır. Çıktılar `dist/` klasörüne yazılır.
-3. GitHub'da `v<sürüm>` etiketiyle bir release oluştur ve `dist/ForceSleep-Setup-<sürüm>.exe` dosyasını ekle.
-4. `dist/winget/manifests/...` klasörünü [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs)'e pull request olarak gönder. Bunun için [`wingetcreate`](https://github.com/microsoft/winget-create) de kullanılabilir.
+- [x] **1.0** — Verified forced sleep, *Why didn't it sleep?*, one-click fixes, installer, English and Turkish
+- [x] **2.0** — New Windows 11 style UI with dark theme, sleep watchdog, sleep timer, keep awake, keyboard shortcut, countdown, media pausing, unexpected wake-up notifications
+- [ ] Code-signed releases
+- [ ] winget package
+- [ ] Sleep history statistics
 
-**İmzalama:** Bir kod imzalama sertifikan varsa `./build.ps1 -CertificateThumbprint <parmak izi>` ile exe, kurulum dosyası ve kaldırıcı imzalanır. Bunun için Windows SDK'daki `signtool.exe` gerekir. İmzalanmış dosyalarda SmartScreen uyarısı çıkmaz, ya da itibar kazandıkça kaybolur.
+### Known limitations
 
----
-
-## Yol haritası
-
-- [x] **v0.1:** Tepsi uygulaması, doğrulamalı zorla uyku, hazırda bekletme yedeği
-- [x] **v0.2:** *Neden uyumadı?* penceresi
-- [x] **v0.3:** Engelleri tek tıkla kapatma ve geri alma
-- [x] **v1.0:** Kurulum dosyası, kendi simgesi, winget dosyaları, İngilizce dil desteği, imzalama altyapısı
-- [ ] İmzalı ilk sürüm ve winget kataloğuna ekleme
-- [ ] Microsoft Store (MSIX paketi)
-
-### Bilinen sınırlamalar
-
-- **Zorla uyku adımı** henüz uykunun gerçekten engellendiği bir durumda denenmedi. Windows bu adımı normal kullanıcı yetkisiyle reddederse bu, log dosyasına yazılır ve hazırda bekletmeye geçilir.
-- **Yönetici izni gereken düzeltmeler** (aygıt uyandırma, program isteğini yok sayma) şimdilik sadece otomatik testlerle doğrulandı.
-- **Uzakta modu ve uyandırma zamanlayıcıları** sadece etkin güç planında kapatılır. Başka bir güç planına geçersen orada tekrar kapatman gerekir.
-- **Exe boyutu** yaklaşık 50 MB, çünkü .NET'i içinde taşıyor. Kurulum dosyası sıkıştırılmış haliyle daha küçük.
+- **Forced sleep** and the **away-mode watchdog** haven't yet been exercised on a machine where sleep is actually being blocked; their rules are covered by unit tests.
+- **Fixes that need admin** are covered by unit tests only so far.
+- **Away mode and wake timers** are turned off in the active power plan only.
+- **The exe is about 78 MB**, since it carries .NET and the UI libraries with it.
 
 ---
 
-## Lisans
+## License
 
 [MIT](LICENSE) © 2026 Niyazi Berkay Çokuysal

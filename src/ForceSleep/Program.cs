@@ -66,6 +66,8 @@ internal static class Program
             Console.WriteLine($"Force Sleep {Version}");
             Console.WriteLine(caps);
             Console.WriteLine($"CanSleep={caps.CanSleep} CanHibernate={caps.CanHibernate}");
+            Console.WriteLine($"WindowsSleepTimeout={PowerSettings.WindowsSleepTimeout()?.ToString() ?? "never"} " +
+                              $"Idle={Native.IdleTime():hh\\:mm\\:ss} MediaPlaying={MediaControl.IsAnythingPlayingAsync().GetAwaiter().GetResult()}");
             return 0;
         }
 
@@ -77,27 +79,24 @@ internal static class Program
             return result.Status == SleepStatus.Slept ? 0 : 1;
         }
 
-        // Opens only the "Neden uyumadı?" window, e.g. from a shortcut.
-        if (Has(args, "--why"))
-        {
-            ApplicationConfiguration.Initialize();
-            using var icon = MoonIcon.Create(32, MoonIcon.Gold);
-            Application.Run(new DiagnosticsForm(icon, settings));
-            return 0;
-        }
-
         using var mutex = new Mutex(initiallyOwned: true, TrayMutexName, out var isFirstInstance);
         using var activate = new EventWaitHandle(false, EventResetMode.AutoReset, ActivateEventName);
         if (!isFirstInstance)
         {
-            // Let the running instance tell the user where it is instead of silently exiting.
+            // Bring up the running copy's window instead of silently exiting.
             activate.Set();
             return 0;
         }
 
+        // Started by Windows at sign-in: stay in the tray. Started by the user: show the window.
+        Ui.Page? startPage =
+            Has(args, AutoStart.Argument) ? null
+            : Has(args, "--why") ? Ui.Page.Why
+            : Has(args, "--settings") ? Ui.Page.Settings
+            : Ui.Page.Home;
+
         using var quit = new EventWaitHandle(false, EventResetMode.ManualReset, QuitEventName);
-        ApplicationConfiguration.Initialize();
-        Application.Run(new TrayApp(settings, activate, quit, quietStart: Has(args, AutoStart.Argument)));
+        new Ui.App(settings, activate, quit, startPage).Run();
         return 0;
     }
 

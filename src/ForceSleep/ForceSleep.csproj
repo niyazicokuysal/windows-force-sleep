@@ -2,7 +2,11 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <!-- The Windows SDK version gives access to Windows' media controls (MediaControl.cs). -->
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <!-- Only for the tray icon: WPF has no notification-area icon of its own. -->
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -14,11 +18,25 @@
     <Authors>Niyazi Berkay Çokuysal</Authors>
     <Company>Niyazi Berkay Çokuysal</Company>
     <Copyright>© 2026 Niyazi Berkay Çokuysal</Copyright>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <ApplicationIcon>..\..\assets\ForceSleep.ico</ApplicationIcon>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
-    <ApplicationVisualStyles>true</ApplicationVisualStyles>
+    <!-- WPF's Fluent theme (ThemeMode) is still marked experimental. -->
+    <NoWarn>$(NoWarn);WPF0001</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- WPF and WinForms share many type names; keep WinForms out of the global usings. -->
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+    <!-- WPF leaves System.IO out (its Path clashes with Shapes.Path, which we don't use). -->
+    <Using Include="System.IO" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Ui\App.xaml is a plain page (not the SDK's App.xaml entry point): Program.Main starts the app. -->
+    <Resource Include="..\..\assets\ForceSleep.ico" Link="Ui\ForceSleep.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="ForceSleep.Tests" />
