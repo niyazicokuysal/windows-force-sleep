@@ -12,6 +12,7 @@
   <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-1b2646?logo=windows" alt="Windows 10 ve 11">
   <img src="https://img.shields.io/badge/.NET-10-512bd4?logo=dotnet" alt=".NET 10">
   <img src="https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e%20%7C%20English-1b2646" alt="Türkçe ve İngilizce">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/lisans-MIT-1b2646" alt="MIT lisansı"></a>
 </p>
 
 <p align="center">
@@ -282,3 +283,9 @@ assets/                 Simge (tools/make-icon.ps1 ile üretilir)
 - **Yönetici izni gereken düzeltmeler** (aygıt uyandırma, program isteğini yok sayma) şimdilik sadece otomatik testlerle doğrulandı.
 - **Uzakta modu ve uyandırma zamanlayıcıları** sadece etkin güç planında kapatılır. Başka bir güç planına geçersen orada tekrar kapatman gerekir.
 - **Exe boyutu** yaklaşık 50 MB, çünkü .NET'i içinde taşıyor. Kurulum dosyası sıkıştırılmış haliyle daha küçük.
+
+---
+
+## Lisans
+
+[MIT](LICENSE) © 2026 Niyazi Berkay Çokuysal

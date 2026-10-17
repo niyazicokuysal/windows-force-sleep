@@ -12,6 +12,7 @@
   <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-1b2646?logo=windows" alt="Windows 10 and 11">
   <img src="https://img.shields.io/badge/.NET-10-512bd4?logo=dotnet" alt=".NET 10">
   <img src="https://img.shields.io/badge/language-English%20%7C%20T%C3%BCrk%C3%A7e-1b2646" alt="English and Turkish">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-1b2646" alt="MIT license"></a>
 </p>
 
 <p align="center">
@@ -108,3 +109,7 @@ dotnet test
 ```
 
 All UI text lives in `src/ForceSleep/Strings.cs`, Turkish and English side by side; a test fails if a text is left untranslated.
+
+## License
+
+[MIT](LICENSE) © 2026 Niyazi Berkay Çokuysal

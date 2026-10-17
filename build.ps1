@@ -27,7 +27,7 @@
 param(
     [string] $CertificateThumbprint,
     [string] $RepoUrl = 'https://github.com/niyazicokuysal/windows-force-sleep',
-    [string] $License = 'TBD',
+    [string] $License = 'MIT',
     [string] $TimestampUrl = 'http://timestamp.digicert.com'
 )
 
